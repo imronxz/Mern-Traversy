@@ -1,0 +1,25 @@
+{
+  "name": "mern-traversy",
+  "version": "1.0.0",
+  "description": "Mern Traversy",
+  "main": "server.js",
+  "repository": "https://github.com/github.com/imronxz",
+  "author": "imron",
+  "license": "MIT",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
