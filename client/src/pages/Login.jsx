@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
 import { FaSignInAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { login, reset } from '../features/Auth/AuthSlice';
+import Spinner from '../components/Spinner';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -9,7 +14,27 @@ function Login() {
 
   const { email, password } = formData;
 
-  const onChangeRegsiter = (e) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth,
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess || user) {
+      // toast.success(message);
+      navigate('/');
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
+  const onChangeLogin = (e) => {
     setFormData((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
@@ -18,7 +43,16 @@ function Login() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const userData = {
+      email, password
+    }
+    dispatch(login(userData))
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -38,7 +72,7 @@ function Login() {
               name="email"
               value={email}
               placeholder="enter your email"
-              onChange={onChangeRegsiter}
+              onChange={onChangeLogin}
             />
           </div>
           <div className="form-group">
@@ -49,7 +83,7 @@ function Login() {
               name="password"
               value={password}
               placeholder="enter your password"
-              onChange={onChangeRegsiter}
+              onChange={onChangeLogin}
             />
           </div>
           <div className="form-group">
