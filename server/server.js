@@ -4,6 +4,7 @@ import colors from 'colors';
 
 import connectDB from './config/db.js';
 import GoalsRoutes from './routes/GoalsRoutes.js';
+import UserRoutes from './routes/UserRoutes.js';
 import errorHandler from './middleware/errorMiddleware.js';
 
 dotenv.config();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/goals', GoalsRoutes);
+app.use('/api/users', UserRoutes);
 
 app.use(errorHandler);
 
